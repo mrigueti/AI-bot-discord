@@ -81,7 +81,6 @@ For your bot to work properly, you need to enable the appropriate "Intents" in t
    - **SERVER MEMBERS INTENT** - If your bot needs to access information about server members
    - **PRESENCE INTENT** - If your bot needs to detect user presence status
 
-![Discord Intents](https://i.imgur.com/RdJwVyj.png)
 
 ### OAuth2 Permissions
 
