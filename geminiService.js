@@ -4,13 +4,7 @@ import dotenv from 'dotenv';
 // Carregar variáveis de ambiente do arquivo .env
 dotenv.config();
 
-/**
- * Gera uma resposta usando a API Gemini
- * @param {string} prompt - A pergunta ou prompt para enviar à API
- * @param {string} harmBlockThreshold - O nível de bloqueio de censura
- * @returns {Promise<string>} - A resposta gerada
- */
-export async function generateResponse(prompt, harmBlockThreshold = 'BLOCK_NONE') {
+export async function generateResponse(prompt) {
   try {
     // Preparar o corpo da requisição conforme a documentação da API Gemini
     const requestBody = {
@@ -21,24 +15,6 @@ export async function generateResponse(prompt, harmBlockThreshold = 'BLOCK_NONE'
               text: prompt
             }
           ]
-        }
-      ],
-      safetySettings: [
-        {
-          category: "HARM_CATEGORY_HARASSMENT",
-          threshold: harmBlockThreshold
-        },
-        {
-          category: "HARM_CATEGORY_HATE_SPEECH",
-          threshold: harmBlockThreshold
-        },
-        {
-          category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-          threshold: harmBlockThreshold
-        },
-        {
-          category: "HARM_CATEGORY_DANGEROUS_CONTENT",
-          threshold: harmBlockThreshold
         }
       ],
       generationConfig: {
