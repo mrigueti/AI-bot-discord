@@ -75,7 +75,7 @@ For your bot to work properly, you need to enable the appropriate "Intents" in t
 
 1. Go to [Discord Developer Portal](https://discord.com/developers/applications)
 2. Select your application
-3. In the "Bot" section, scroll down to find "Privileged Gateway Intents"
+3. In ``OAuth2`` the "Bot" section, scroll down to find "Privileged Gateway Intents"
 4. You will likely need to enable:
    - **MESSAGE CONTENT INTENT** - Allows the bot to read message content (essential for commands)
    - **SERVER MEMBERS INTENT** - If your bot needs to access information about server members
@@ -95,7 +95,7 @@ When inviting the bot to a server, you need to specify the correct permissions:
    - `Embed Links` (if your bot sends embeds)
    - Any other specific permissions your bot might need
 
-4. Use the generated URL to invite the bot to your server
+4. Use the generated URL in your browser to invite the bot to your server
 
 ### About discord.js
 
@@ -104,21 +104,3 @@ This project uses [discord.js](https://discord.js.org/), a powerful Node.js libr
 - **Compatible version**: This project requires discord.js v14+ which works with the latest Discord API
 - **Node.js**: Make sure to use Node.js 16.x or higher (as per library requirements)
 - **Code structure**: This template implements a modular approach to facilitate bot expansion
-
-#### Example code for initialization:
-
-```javascript
-// Example of how to set up the client with necessary intents
-const { Client, GatewayIntentBits } = require('discord.js');
-
-const client = new Client({ 
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent,
-    // Add other intents as needed
-  ] 
-});
-
-client.login(process.env.DISCORD_TOKEN);
-```
