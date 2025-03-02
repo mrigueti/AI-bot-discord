@@ -17,13 +17,24 @@ const client = new Client({
 });
 
 // prefixo para comandos do bot
-const prefix = '!bot';
+const prefix = '!youka';
 
 // Evento executado quando o bot está online
 client.once(Events.ClientReady, (readyClient) => {
     console.log(`Bot conectado como ${readyClient.user.tag}!`);
 });
 
+// Armazenar histórico de conversas por canal
+const conversationHistory = new Map();
+
+// Função para limpar histórico antigo (manter últimas 50 mensagens)
+function cleanOldHistory(channelId) {
+    const history = conversationHistory.get(channelId) || [];
+    if (history.length > 50) {
+        history.splice(0, history.length - 50);
+        conversationHistory.set(channelId, history);
+    }
+}
 
 // Evento para processar mensagens
 client.on(Events.MessageCreate, async (message) => {
@@ -34,7 +45,7 @@ client.on(Events.MessageCreate, async (message) => {
     const prompt = message.content.slice(prefix.length).trim();
 
     if (!prompt) {
-        message.reply('Por favor, digite uma pergunta após o comando !bot');
+        message.reply('Por favor, digite uma pergunta após o comando !youka');
         return;
     }
 
@@ -42,16 +53,39 @@ client.on(Events.MessageCreate, async (message) => {
         // Enviar indicação de digitação enquanto processa
         await message.channel.sendTyping();
 
+        // Obter histórico do canal
+        const channelHistory = conversationHistory.get(message.channel.id) || [];
+        
+        // Adicionar mensagem atual ao histórico
+        channelHistory.push({
+            role: 'user',
+            content: prompt,
+            timestamp: new Date().toISOString()
+        });
+
         console.log(`Processando pergunta: "${prompt}"`);
 
-        // Obter resposta da API gemini
-        const response = await generateResponse(prompt);
+        // Obter resposta da API gemini com contexto do histórico
+        const response = await generateResponse(prompt, channelHistory);
+
+        // Adicionar resposta ao histórico
+        channelHistory.push({
+            role: 'assistant',
+            content: response,
+            timestamp: new Date().toISOString()
+        });
+
+        // Atualizar histórico no Map
+        conversationHistory.set(message.channel.id, channelHistory);
+
+        // Limpar histórico antigo
+        cleanOldHistory(message.channel.id);
 
         // Verificar se a resposta é muito longa para um único envio
         if (response.length > 2000) {
             // Dividir em múltiplas mensagens
-            for (let i = 0; i < response.length; i += 2000) {
-                const chunk = response.substring(i, Math.min(response.length, i + 2000));
+            const chunks = response.match(/(.|\n){1,2000}/g) || [];
+            for (const chunk of chunks) {
                 await message.reply(chunk);
             }
         } else {
