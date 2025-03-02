@@ -17,7 +17,7 @@ const client = new Client({
 });
 
 // prefixo para comandos do bot
-const prefix = '!youka';
+const prefix = '!bot';
 
 // Evento executado quando o bot está online
 client.once(Events.ClientReady, (readyClient) => {
@@ -45,7 +45,7 @@ client.on(Events.MessageCreate, async (message) => {
     const prompt = message.content.slice(prefix.length).trim();
 
     if (!prompt) {
-        message.reply('Por favor, digite uma pergunta após o comando !youka');
+        message.reply('Por favor, digite uma pergunta após o comando !bot');
         return;
     }
 

@@ -8,14 +8,15 @@
 
 ### 📝 Description
 
-This project is a simple template for creating a Discord bot with artificial intelligence capabilities using the Google Gemini API. With this template, you can easily build a bot that responds to messages with advanced AI capabilities.
+This project is a simple template for creating a Discord bot with artificial intelligence capabilities using the Google Gemini API. With this template, you can easily build a bot that responds to messages with advanced AI capabilities. The bot has access to internet information and maintains chat context for natural, continuous conversations.
 
 ### ✨ Features
 
 - Full Discord.js integration
 - Google Gemini API implementation for AI features
+- Internet access for up-to-date information
 - Customizable command system
-- Conversation context management
+- Conversation context management for continuous, natural dialogues
 - Simple configuration
 
 ### 🚀 Installation
