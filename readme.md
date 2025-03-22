@@ -23,7 +23,7 @@ This project is a simple template for creating a Discord bot with artificial int
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/mrigueti/simple-discord-AI.git
+git clone https://github.com/mrigueti/AI-discordBot.git
 cd simple-discord-AI
 ```
 
